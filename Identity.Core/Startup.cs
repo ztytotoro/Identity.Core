@@ -29,7 +29,7 @@ namespace Identity.Core
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<IdentityCoreContext>(options =>
-                    options.UseSqlite(Configuration.GetConnectionString("IdentityCoreContextConnection")));
+                    options.UseNpgsql(Configuration.GetConnectionString("IdentityCoreContextConnection")));
 
             services.AddIdentity<IdentityCoreUser, IdentityRole>(options =>
             {
@@ -101,6 +101,8 @@ namespace Identity.Core
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseMigration();
 
             app.UseEndpoints(endpoints =>
             {

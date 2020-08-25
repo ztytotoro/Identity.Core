@@ -1,0 +1,24 @@
+version: '3.4'
+
+services:
+  identity.core:
+    image: ${DOCKER_REGISTRY-}identitycore
+    restart: always
+    build:
+      context: .
+      dockerfile: Identity.Core/Dockerfile
+    ports:
+      - "8060:80"
+    depends_on:
+      - db
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: 123456
+    volumes:
+      - data:/var/lib/postgresql/data
+
+volumes:
+  data:
