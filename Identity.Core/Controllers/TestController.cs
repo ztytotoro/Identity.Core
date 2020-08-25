@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Identity.Core.Controllers
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class TestController : ControllerBase

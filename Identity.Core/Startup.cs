@@ -39,7 +39,11 @@ namespace Identity.Core
                 .AddEntityFrameworkStores<IdentityCoreContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
             .AddCookie()
             .AddJwtBearer(jwtBearerOptions =>
             {
