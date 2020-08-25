@@ -7,6 +7,10 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
 COPY ["Identity.Core/Identity.Core.csproj", "Identity.Core/"]
+COPY ["ApiDocument/ApiDocument.csproj", "ApiDocument/"]
+COPY ["Identity/Identity.csproj", "Identity/"]
+COPY ["Database/Database.csproj", "Database/"]
+COPY ["Logging/Logging.csproj", "Logging/"]
 RUN dotnet restore "Identity.Core/Identity.Core.csproj"
 COPY . .
 WORKDIR "/src/Identity.Core"

@@ -1,5 +1,6 @@
 using ApiDocument;
 using Database;
+using Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -43,6 +44,8 @@ namespace Identity.Core
                 app.UseDeveloperExceptionPage();
                 IdentityModelEventSource.ShowPII = true;
             }
+
+            app.UseRequestLogging();
 
             app.UseApiDocument();
 

@@ -3,7 +3,7 @@
   <PropertyGroup Label="Globals">
     <ProjectVersion>2.1</ProjectVersion>
     <DockerTargetOS>Linux</DockerTargetOS>
-    <ProjectGuid>a1bd7bb5-2330-4905-8c6e-2b1e60eedea0</ProjectGuid>
+    <ProjectGuid>51890aa9-f301-4dd3-a3a4-c6dedb0a7faf</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/swagger</DockerServiceUrl>
     <DockerServiceName>identity.core</DockerServiceName>

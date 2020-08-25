@@ -11,6 +11,8 @@ services:
       - "8060:80"
     depends_on:
       - db
+    volumes:
+      - log:/app/Logs
 
   db:
     image: postgres
@@ -22,3 +24,4 @@ services:
 
 volumes:
   data:
+  log:
