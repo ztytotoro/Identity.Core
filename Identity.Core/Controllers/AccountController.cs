@@ -1,4 +1,4 @@
-﻿using Identity.Core.Areas.Identity.Data;
+﻿using Database;
 using Identity.Core.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

@@ -1,13 +1,9 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
+﻿using Identity.Core.Base;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Identity.Core.Controllers
 {
-    [Authorize]
-    [Route("api/[controller]")]
-    [ApiController]
-    public class TestController : ControllerBase
+    public class TestController : BaseController
     {
         [HttpGet]
         public string[] Get()
