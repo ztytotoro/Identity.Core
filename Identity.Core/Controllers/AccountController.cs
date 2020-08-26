@@ -1,9 +1,8 @@
-﻿using Database;
+﻿using Database.Models;
 using Identity.Core.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -19,19 +18,16 @@ namespace Identity.Core.Controllers
     [Route("api/[controller]")]
     public class AccountController : ControllerBase
     {
-        private readonly ILogger<AccountController> _logger;
         private readonly UserManager<IdentityCoreUser> _manager;
         private readonly SignInManager<IdentityCoreUser> _signInManager;
         private readonly IConfiguration _configuration;
 
         public AccountController(
-            ILogger<AccountController> logger,
             UserManager<IdentityCoreUser> manager,
             SignInManager<IdentityCoreUser> signInManager,
             IConfiguration configuration
             )
         {
-            _logger = logger;
             _manager = manager;
             _signInManager = signInManager;
             _configuration = configuration;
@@ -46,7 +42,7 @@ namespace Identity.Core.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterDto data)
         {
-            var result = await _manager.CreateAsync(new IdentityCoreUser { UserName = data.UserName, EmailConfirmed = true }, data.Password);
+            IdentityResult result = await _manager.CreateAsync(new IdentityCoreUser { UserName = data.UserName, EmailConfirmed = true }, data.Password);
 
             return Ok(result);
         }
@@ -54,11 +50,11 @@ namespace Identity.Core.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(RegisterDto data)
         {
-            var user = await _manager.FindByNameAsync(data.UserName);
+            IdentityCoreUser user = await _manager.FindByNameAsync(data.UserName);
 
             if (user != null)
             {
-                var result = await _signInManager.CheckPasswordSignInAsync
+                Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.CheckPasswordSignInAsync
                             (user, data.Password, lockoutOnFailure: false);
 
                 if (!result.Succeeded)
@@ -66,13 +62,13 @@ namespace Identity.Core.Controllers
                     return Unauthorized();
                 }
 
-                var claims = new List<Claim>
+                List<Claim> claims = new List<Claim>
                 {
                     new Claim(JwtRegisteredClaimNames.Sub, data.UserName),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
                 };
 
-                var token = new JwtSecurityToken
+                JwtSecurityToken token = new JwtSecurityToken
                 (
                     issuer: _configuration["Token:Issuer"],
                     audience: _configuration["Token:Audience"],

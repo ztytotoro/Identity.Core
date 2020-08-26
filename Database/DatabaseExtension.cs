@@ -14,9 +14,9 @@ namespace Database
 
         public static void UseMigration(this IApplicationBuilder app)
         {
-            using var scope = app.ApplicationServices.CreateScope();
+            using IServiceScope scope = app.ApplicationServices.CreateScope();
 
-            var context = scope.ServiceProvider.GetService<IdentityCoreContext>();
+            IdentityCoreContext context = scope.ServiceProvider.GetService<IdentityCoreContext>();
 
             context.Database.EnsureCreated();
         }

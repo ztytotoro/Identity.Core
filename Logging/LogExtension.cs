@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Hosting;
 using Serilog;
-using Serilog.Events;
-using Serilog.Formatting.Elasticsearch;
 using Serilog.Sinks.Elasticsearch;
 using System;
-using System.Diagnostics;
 
 namespace Logging
 {
@@ -15,8 +12,6 @@ namespace Logging
         {
             Serilog.Debugging.SelfLog.Enable(Console.Error);
             Log.Logger = new LoggerConfiguration()
-            .MinimumLevel.Debug()
-            .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
             .Enrich.FromLogContext()
             .WriteTo.Console()
             .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri("http://elasticsearch:9200"))
@@ -53,6 +48,4 @@ namespace Logging
             app.UseSerilogRequestLogging();
         }
     }
-
-
 }
