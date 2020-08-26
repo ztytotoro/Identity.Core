@@ -30,6 +30,10 @@ services:
       - 9300:9300
     environment:
       - discovery.type=single-node
+      # Add for elasticvue ↓
+      - http.cors.enabled=true
+      - http.cors.allow-origin=http://localhost:5602
+      - http.cors.allow-headers=X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization
 
   kibana:
     image: docker.elastic.co/kibana/kibana:7.9.0
@@ -39,6 +43,13 @@ services:
       SERVER_NAME: Identity.Core
     depends_on:
       - es
+    links:
+      - es:elasticsearch
+
+  elasticvue:
+    image: cars10/elasticvue
+    ports:
+      - 5602:8080
     links:
       - es:elasticsearch
     
