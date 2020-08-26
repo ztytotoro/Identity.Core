@@ -2,7 +2,10 @@
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
+using Serilog.Formatting.Elasticsearch;
+using Serilog.Sinks.Elasticsearch;
 using System;
+using System.Diagnostics;
 
 namespace Logging
 {
@@ -10,11 +13,17 @@ namespace Logging
     {
         public static int RunAndLog(this IHost host)
         {
+            Serilog.Debugging.SelfLog.Enable(Console.Error);
             Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Debug()
             .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
             .Enrich.FromLogContext()
-            .WriteTo.File("Logs/log.txt")
+            .WriteTo.Console()
+            .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri("http://elasticsearch:9200"))
+            {
+                AutoRegisterTemplate = true,
+                AutoRegisterTemplateVersion = AutoRegisterTemplateVersion.ESv7
+            })
             .CreateLogger();
 
             try

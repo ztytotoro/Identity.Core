@@ -11,8 +11,9 @@ services:
       - "8060:80"
     depends_on:
       - db
-    volumes:
-      - log:/app/Logs
+      - es
+    links:
+      - es:elasticsearch
 
   db:
     image: postgres
@@ -22,6 +23,25 @@ services:
     volumes:
       - data:/var/lib/postgresql/data
 
+  es:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.0
+    ports:
+      - 9200:9200
+      - 9300:9300
+    environment:
+      - discovery.type=single-node
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.9.0
+    ports:
+      - 5601:5601
+    environment:
+      SERVER_NAME: Identity.Core
+    depends_on:
+      - es
+    links:
+      - es:elasticsearch
+    
+
 volumes:
   data:
-  log:
