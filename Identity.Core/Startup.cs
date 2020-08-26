@@ -22,8 +22,10 @@ namespace Identity.Core
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // [ADD] Use Database
             services.AddNpgsqlDatabase(Configuration.GetConnectionString("IdentityCoreContextConnection"));
 
+            // [ADD] Configure Identity with JWT token
             services.AddJwtIdentity(new JwtOptions
             {
                 Issuer = Configuration["Token:Issuer"],
@@ -31,6 +33,7 @@ namespace Identity.Core
                 Key = Configuration["Token:Key"]
             });
 
+            // [ADD] Add Api Document
             services.AddApiDocument();
 
             services.AddControllers();
@@ -42,17 +45,22 @@ namespace Identity.Core
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                // [ADD] Show PII
                 IdentityModelEventSource.ShowPII = true;
             }
 
+            // [ADD] Serilog for request
             app.UseRequestLogging();
 
+            // [ADD] Use open api documents
             app.UseApiDocument();
 
             app.UseRouting();
 
+            // [ADD] Add Identity features
             app.UseIdentity();
 
+            // [ADD] Automatic migration when startup
             app.UseMigration();
 
             app.UseEndpoints(endpoints =>
