@@ -1,5 +1,6 @@
 using ApiDocument;
 using Database;
+using ErrorHandler;
 using Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -36,7 +37,8 @@ namespace Identity.Core
             // [ADD] Add Api Document
             services.AddApiDocument();
 
-            services.AddControllers();
+            // [ADD] Add Error Handler
+            services.AddControllers(options => options.UseExceptionFilter());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

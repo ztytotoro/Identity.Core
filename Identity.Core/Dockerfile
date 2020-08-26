@@ -10,6 +10,7 @@ COPY ["Identity.Core/Identity.Core.csproj", "Identity.Core/"]
 COPY ["ApiDocument/ApiDocument.csproj", "ApiDocument/"]
 COPY ["Identity/Identity.csproj", "Identity/"]
 COPY ["Database/Database.csproj", "Database/"]
+COPY ["ErrorHandler/ErrorHandler.csproj", "ErrorHandler/"]
 COPY ["Logging/Logging.csproj", "Logging/"]
 RUN dotnet restore "Identity.Core/Identity.Core.csproj"
 COPY . .
