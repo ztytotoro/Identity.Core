@@ -4,6 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Primitives;
+using System;
+using System.Globalization;
+using System.Linq;
 
 namespace ErrorHandler
 {
@@ -14,12 +18,12 @@ namespace ErrorHandler
             options.Filters.Add<HttpResponseExceptionFilter>();
         }
 
-        public static void AddLocalization(IServiceCollection services)
+        public static void AddErrorLocalization(this IServiceCollection services)
         {
             services.AddLocalization(options => options.ResourcesPath = "Resources");
         }
 
-        public static void UseLocalization(this IApplicationBuilder app)
+        public static void UseErrorLocalization(this IApplicationBuilder app)
         {
             var supportedCultures = new[] { "en-US", "zh-CN" };
             var localizationOptions = new RequestLocalizationOptions().SetDefaultCulture(supportedCultures[0])
@@ -27,6 +31,36 @@ namespace ErrorHandler
                 .AddSupportedUICultures(supportedCultures);
 
             app.UseRequestLocalization(localizationOptions);
+
+            // Custom language process
+            app.Use(async (context, next) => {
+                context.Request.Query.TryGetValue("lang", out StringValues queryLanguages);
+                context.Request.Headers.TryGetValue("language", out StringValues languages);
+
+                string language = null;
+
+                if (queryLanguages.Count > 0)
+                {
+                    language = queryLanguages.Last();
+                }
+                else if (languages.Count > 0)
+                {
+                    language = languages.Last();
+                }
+
+                if(!string.IsNullOrEmpty(language))
+                {
+                    var culture = localizationOptions.SupportedCultures.FirstOrDefault(
+                        supportedCulture => StringSegment.Equals(supportedCulture.Name, language, StringComparison.OrdinalIgnoreCase));
+                    if (culture != null)
+                    {
+                        CultureInfo.CurrentCulture = culture;
+                        CultureInfo.CurrentUICulture = culture;
+                    }
+                }
+
+                await next.Invoke();
+            });
         }
     }
 
@@ -49,7 +83,7 @@ namespace ErrorHandler
                 context.Result = new ObjectResult(new
                 {
                     errorCode = exception.Code,
-                    message = _localizer[((int)exception.Code).ToString()]
+                    message = _localizer[((int)exception.Code).ToString()].Value
                 })
                 {
                     StatusCode = StatusCodes.Status400BadRequest,

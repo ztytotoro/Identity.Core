@@ -34,6 +34,9 @@ namespace Identity.Core
                 Key = Configuration["Token:Key"]
             });
 
+            // [ADD] Localization
+            services.AddErrorLocalization();
+
             // [ADD] Add Api Document
             services.AddApiDocument();
 
@@ -53,6 +56,9 @@ namespace Identity.Core
 
             // [ADD] Serilog for request
             app.UseRequestLogging();
+
+            // [ADD] Localization
+            app.UseErrorLocalization();
 
             // [ADD] Use open api documents
             app.UseApiDocument();
