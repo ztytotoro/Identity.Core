@@ -30,6 +30,7 @@ namespace ErrorHandler
                 .AddSupportedCultures(supportedCultures)
                 .AddSupportedUICultures(supportedCultures);
 
+            // Use official request localization
             app.UseRequestLocalization(localizationOptions);
 
             // Custom language process
