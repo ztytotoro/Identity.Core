@@ -83,7 +83,7 @@ namespace ErrorHandler
                 context.Result = new ObjectResult(new
                 {
                     errorCode = exception.Code,
-                    message = _localizer[((int)exception.Code).ToString()].Value
+                    message = _localizer[exception.Code.ToString()].Value
                 })
                 {
                     StatusCode = StatusCodes.Status400BadRequest,
