@@ -17,6 +17,8 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ErrorHandler", "ErrorHandler\ErrorHandler.csproj", "{BAD23C51-23AE-4260-865A-14E51D65281E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Module", "Module\Module.csproj", "{B3BE53E6-FA1A-439F-B608-9A7BA0DBDA78}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{BAD23C51-23AE-4260-865A-14E51D65281E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BAD23C51-23AE-4260-865A-14E51D65281E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BAD23C51-23AE-4260-865A-14E51D65281E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3BE53E6-FA1A-439F-B608-9A7BA0DBDA78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3BE53E6-FA1A-439F-B608-9A7BA0DBDA78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3BE53E6-FA1A-439F-B608-9A7BA0DBDA78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3BE53E6-FA1A-439F-B608-9A7BA0DBDA78}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
