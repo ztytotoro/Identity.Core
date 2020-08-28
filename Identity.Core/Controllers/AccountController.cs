@@ -40,11 +40,11 @@ namespace Identity.Core.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register(RegisterDto data)
+        public async Task<IdentityResult> Register(RegisterDto data)
         {
             IdentityResult result = await _manager.CreateAsync(new IdentityCoreUser { UserName = data.UserName, EmailConfirmed = true }, data.Password);
 
-            return Ok(result);
+            return result;
         }
 
         [HttpPost("login")]
