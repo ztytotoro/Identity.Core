@@ -18,13 +18,13 @@ namespace Identity.Core.Controllers
     [Route("api/[controller]")]
     public class AccountController : ControllerBase
     {
-        private readonly UserManager<IdentityCoreUser> _manager;
-        private readonly SignInManager<IdentityCoreUser> _signInManager;
+        private readonly UserManager<MotoUser> _manager;
+        private readonly SignInManager<MotoUser> _signInManager;
         private readonly IConfiguration _configuration;
 
         public AccountController(
-            UserManager<IdentityCoreUser> manager,
-            SignInManager<IdentityCoreUser> signInManager,
+            UserManager<MotoUser> manager,
+            SignInManager<MotoUser> signInManager,
             IConfiguration configuration
             )
         {
@@ -34,7 +34,7 @@ namespace Identity.Core.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<IdentityCoreUser> Get()
+        public IEnumerable<MotoUser> Get()
         {
             return _manager.Users.ToArray();
         }
@@ -42,7 +42,7 @@ namespace Identity.Core.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterDto data)
         {
-            IdentityResult result = await _manager.CreateAsync(new IdentityCoreUser { UserName = data.UserName, EmailConfirmed = true }, data.Password);
+            IdentityResult result = await _manager.CreateAsync(new MotoUser { UserName = data.UserName, EmailConfirmed = true }, data.Password);
 
             return Ok(result);
         }
@@ -50,7 +50,7 @@ namespace Identity.Core.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(RegisterDto data)
         {
-            IdentityCoreUser user = await _manager.FindByNameAsync(data.UserName);
+            MotoUser user = await _manager.FindByNameAsync(data.UserName);
 
             if (user != null)
             {

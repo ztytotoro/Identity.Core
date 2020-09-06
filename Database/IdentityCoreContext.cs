@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Database
 {
-    public class IdentityCoreContext : IdentityDbContext<IdentityCoreUser>
+    public class IdentityCoreContext : IdentityDbContext<MotoUser>
     {
         public IdentityCoreContext(DbContextOptions<IdentityCoreContext> options)
             : base(options)

@@ -13,7 +13,7 @@ namespace Identity
     public static class IdentityExtension
     {
         public static void AddJwtIdentity(this IServiceCollection services, JwtOptions options) {
-            services.AddIdentity<IdentityCoreUser, IdentityRole>(options =>
+            services.AddIdentity<MotoUser, IdentityRole>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = true;
                 options.Password.RequireUppercase = false;
