@@ -1,24 +1,16 @@
 using Logging;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using Identity.Core;
 
-namespace Identity.Core
+IHostBuilder CreateHostBuilder(string[] args)
 {
-    public class Program
+    return Host.CreateDefaultBuilder(args)
+    .UseLogging()
+    .ConfigureWebHostDefaults(webBuilder =>
     {
-        public static void Main(string[] args)
-        {
-            CreateHostBuilder(args).Build().RunAndLog();
-        }
-
-        public static IHostBuilder CreateHostBuilder(string[] args)
-        {
-            return Host.CreateDefaultBuilder(args)
-            .UseLogging()
-            .ConfigureWebHostDefaults(webBuilder =>
-            {
-                webBuilder.UseStartup<Startup>();
-            });
-        }
-    }
+        webBuilder.UseStartup<Startup>();
+    });
 }
+
+CreateHostBuilder(args).Build().RunAndLog();
