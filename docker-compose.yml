@@ -1,4 +1,4 @@
-version: '3.4'
+version: '3.8'
 
 services:
   identity.core:
@@ -26,7 +26,7 @@ services:
       - data:/var/lib/postgresql/data
 
   es:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.0
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.13.0
     ports:
       - 9200:9200
       - 9300:9300
@@ -38,11 +38,12 @@ services:
       - http.cors.allow-headers=X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization
 
   kibana:
-    image: docker.elastic.co/kibana/kibana:7.9.0
+    image: docker.elastic.co/kibana/kibana:7.13.0
     ports:
       - 5601:5601
     environment:
       SERVER_NAME: Identity.Core
+      I18N_LOCALE: zh-CN
     depends_on:
       - es
     links:

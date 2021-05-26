@@ -19,6 +19,7 @@ namespace Logging
             .WriteTo.Console()
             .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(Configuration["ElasticConfiguration:Uri"]))
             {
+                IndexFormat = Configuration["ElasticConfiguration:IndexFormat"] ?? "app-{0:yyyy.MM.dd}",
                 AutoRegisterTemplate = true,
                 AutoRegisterTemplateVersion = AutoRegisterTemplateVersion.ESv7
             })
