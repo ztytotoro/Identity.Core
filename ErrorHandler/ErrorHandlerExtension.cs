@@ -34,7 +34,8 @@ namespace ErrorHandler
             app.UseRequestLocalization(localizationOptions);
 
             // Custom language process
-            app.Use(async (context, next) => {
+            app.Use(async (context, next) =>
+            {
                 context.Request.Query.TryGetValue("lang", out StringValues queryLanguages);
                 context.Request.Headers.TryGetValue("language", out StringValues languages);
 
@@ -49,7 +50,7 @@ namespace ErrorHandler
                     language = languages.Last();
                 }
 
-                if(!string.IsNullOrEmpty(language))
+                if (!string.IsNullOrEmpty(language))
                 {
                     var culture = localizationOptions.SupportedCultures.FirstOrDefault(
                         supportedCulture => StringSegment.Equals(supportedCulture.Name, language, StringComparison.OrdinalIgnoreCase));
@@ -69,7 +70,8 @@ namespace ErrorHandler
     {
         private readonly IStringLocalizer<HttpResponseExceptionFilter> _localizer;
 
-        public HttpResponseExceptionFilter(IStringLocalizer<HttpResponseExceptionFilter> localizer) {
+        public HttpResponseExceptionFilter(IStringLocalizer<HttpResponseExceptionFilter> localizer)
+        {
             _localizer = localizer;
         }
 

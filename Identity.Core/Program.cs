@@ -1,7 +1,7 @@
+using Identity.Core;
 using Logging;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
-using Identity.Core;
 
 IHostBuilder CreateHostBuilder(string[] args)
 {

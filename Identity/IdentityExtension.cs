@@ -12,7 +12,8 @@ namespace Identity
 {
     public static class IdentityExtension
     {
-        public static void AddJwtIdentity(this IServiceCollection services, JwtOptions options) {
+        public static void AddJwtIdentity(this IServiceCollection services, JwtOptions options)
+        {
             services.AddIdentity<IdentityCoreUser, IdentityRole>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = true;
@@ -51,7 +52,8 @@ namespace Identity
             });
         }
 
-        public static void UseIdentity(this IApplicationBuilder app) {
+        public static void UseIdentity(this IApplicationBuilder app)
+        {
             app.UseAuthentication();
             app.UseAuthorization();
         }

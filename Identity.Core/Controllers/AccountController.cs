@@ -1,5 +1,7 @@
 ﻿using Database.Models;
+using Identity.Core.Base;
 using Identity.Core.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -14,9 +16,7 @@ using System.Threading.Tasks;
 
 namespace Identity.Core.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class AccountController : ControllerBase
+    public class AccountController : BaseController
     {
         private readonly UserManager<IdentityCoreUser> _manager;
         private readonly SignInManager<IdentityCoreUser> _signInManager;
@@ -39,6 +39,7 @@ namespace Identity.Core.Controllers
             return _manager.Users.ToArray();
         }
 
+        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterDto data)
         {
@@ -47,6 +48,7 @@ namespace Identity.Core.Controllers
             return Ok(result);
         }
 
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> Login(RegisterDto data)
         {
