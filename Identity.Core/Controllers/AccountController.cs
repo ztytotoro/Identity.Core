@@ -64,13 +64,13 @@ namespace Identity.Core.Controllers
                     return Unauthorized();
                 }
 
-                List<Claim> claims = new List<Claim>
+                var claims = new List<Claim>
                 {
                     new Claim(JwtRegisteredClaimNames.Sub, data.UserName),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
                 };
 
-                JwtSecurityToken token = new JwtSecurityToken
+                var token = new JwtSecurityToken
                 (
                     issuer: _configuration["Token:Issuer"],
                     audience: _configuration["Token:Audience"],
